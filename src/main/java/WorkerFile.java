@@ -1,4 +1,3 @@
-import Model.User;
 import Model.UsersStorage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,21 +12,6 @@ public class WorkerFile {
 
     public WorkerFile(String nameFile) {
         this.nameFile = nameFile;
-    }
-
-
-    public void saveToStorage(User user) {
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        //  String output = gson.toJson(userStorage);
-        String output = gson.toJson(user);
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(nameFile, true)))) {
-            writer.write(output);
-            System.out.println("The users are saved in the storage successfully");
-        } catch (IOException e) {
-            System.out.println("Input ouput error " + e);
-        }
-
     }
 
 
