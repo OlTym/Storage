@@ -24,10 +24,14 @@ public class FileStorage implements Storage {
     @Override
     public void removeAll() {
         List<User> list = getListUsers();
-        if (!list.isEmpty()) {
+
+        if (list != null) {
             list.clear();
+            workerFile.deleteFile();
+        } else {
+            System.out.println("The storage is empty");
         }
-        workerFile.deleteFile();
+
     }
 
     @Override
@@ -35,7 +39,7 @@ public class FileStorage implements Storage {
         boolean remove = false;
 
         List<User> list = getListUsers();
-        if (!list.isEmpty()) {
+        if (list != null) {
             for (User user : list) {
                 if (user.getID() == id) {
                     usersStorage.delete(list.indexOf(user));
@@ -58,7 +62,7 @@ public class FileStorage implements Storage {
         boolean remove = false;
         List<User> list = getListUsers();
 
-        if (!list.isEmpty()) {
+        if (list != null) {
             for (User user : list) {
                 if (user.getName().equals(name)) {
                     usersStorage.delete(list.indexOf(user));
@@ -78,6 +82,8 @@ public class FileStorage implements Storage {
 
     @Override
     public void addUser(User user) {
+
+
         usersStorage.add(user);
         workerFile.saveToStorage(usersStorage);
         System.out.println("This user is added successfully");
@@ -87,7 +93,7 @@ public class FileStorage implements Storage {
     public void updateUser(User user) {
         boolean update = false;
         List<User> list = getListUsers();
-        if (!list.isEmpty()) {
+        if (list != null) {
 
             for (User us : list) {
                 if (us.getID() == user.getID()) {
@@ -110,7 +116,7 @@ public class FileStorage implements Storage {
     public User getUser(int id) {
         List<User> list = getListUsers();
         int index = -1;
-        if (!list.isEmpty()) {
+        if (list != null) {
             for (User user : list) {
                 if (user.getID() == id) {
                     index = list.indexOf(user);
@@ -132,20 +138,27 @@ public class FileStorage implements Storage {
 
     @Override
     public List<User> getAllUsers() {
+
         return getListUsers();
     }
+
 
     private List<User> getListUsers() {
         String json = null;
         UsersStorage restoredStorage = null;
+
         if (Files.exists(Paths.get(this.nameFile)) && Files.isRegularFile(Paths.get(this.nameFile))) {
             json = workerFile.readFromFile();
         }
+
         if (json != null) {
             Gson gson = new Gson();
             restoredStorage = gson.fromJson(json, UsersStorage.class);
+            return restoredStorage.getList();
         }
-        return restoredStorage.getList();
+
+        return null;
+
     }
 
 }

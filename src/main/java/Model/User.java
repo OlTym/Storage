@@ -19,7 +19,7 @@ public class User {
         return id;
     }
 
-     void setID(int id) {
+    void setID(int id) {
         this.id = id;
     }
 
@@ -32,6 +32,7 @@ public class User {
         this.age = age;
     }
 
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("user{");
@@ -40,8 +41,6 @@ public class User {
         sb.append(", age=").append(age);
         sb.append("}").append("\n");
         return sb.toString();
-
-
     }
 
 

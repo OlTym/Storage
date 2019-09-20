@@ -16,7 +16,7 @@ class GeneratorID {
         lastGuid = baseTimeInMicro;
     }
 
-     static int newGuid() {
+    static int newGuid() {
         long newGuid;
         while ((newGuid = calNewTimeInMicro()) <= lastGuid) {
 

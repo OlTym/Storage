@@ -8,16 +8,12 @@ import java.util.List;
 public class UsersStorage {
 
     static int id = 0;
-
     @SerializedName("Users")
     private List<User> list = new ArrayList<>();
 
-
     public void add(User user) {
 
-
         user.setID(GeneratorID.newGuid());
-
         list.add(user);
 
     }
